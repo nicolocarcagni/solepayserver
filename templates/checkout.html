@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLEPay Checkout</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border-left-color: #eab308;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pulse-success {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.5);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 20px rgba(234, 179, 8, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(234, 179, 8, 0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-200 min-h-screen flex items-center justify-center p-4">
+
+    <div
+        class="glass-panel rounded-2xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden border-t-4 border-t-yellow-500">
+
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold tracking-tight text-white mb-2">SOLEPay Server</h1>
+            <p class="text-sm text-slate-400">Complete your payment below</p>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="bg-slate-800/80 rounded-xl p-4 mb-6 border border-slate-700">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-slate-400 text-sm">Order ID</span>
+                <span class="font-mono text-sm text-slate-300">{{ invoice.memo }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400 text-sm">Amount Due</span>
+                <span class="text-xl font-bold text-yellow-400">{{ invoice.amount }} SOLE</span>
+            </div>
+        </div>
+
+        <!-- Payment Section (PENDING) -->
+        <div id="payment-section" class="{{ 'hidden' if invoice.status != 'PENDING' else 'block' }}">
+            <div class="flex flex-col items-center justify-center mb-6">
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-slate-200 mb-4 inline-block">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+
+            <a href="{{ uri | safe }}"
+                class="block w-full text-center bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold py-3 px-4 rounded-xl transition duration-200 shadow-lg mb-4">
+                Pay in Wallet
+            </a>
+
+            <div class="flex items-center justify-center gap-2 text-sm text-slate-400">
+                <div class="spinner"></div>
+                Waiting for payment...
+            </div>
+        </div>
+
+        <!-- Success: PAID -->
+        <div id="success-message" class="{{ 'block' if invoice.status == 'PAID' else 'hidden' }} text-center py-6">
+            <div
+                class="w-20 h-20 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-500/30 pulse-success">
+                <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-2">Payment Confirmed!</h2>
+            <p class="text-slate-400 mb-6">Thank you for your purchase. Your transaction was successful.</p>
+        </div>
+
+        <!-- Warning: EXPIRED -->
+        <div id="expired-message" class="{{ 'block' if invoice.status == 'EXPIRED' else 'hidden' }} text-center py-6">
+            <div
+                class="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/30">
+                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-red-400 mb-2">Invoice Expired</h2>
+            <p class="text-slate-400 mb-6">This invoice has expired. Please request a new one.</p>
+        </div>
+
+        <!-- Warning: UNDERPAID -->
+        <div id="underpaid-message"
+            class="{{ 'block' if invoice.status == 'UNDERPAID' else 'hidden' }} text-center py-6">
+            <div
+                class="w-20 h-20 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-orange-500/30">
+                <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z">
+                    </path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-orange-400 mb-2">Underpayment Detected</h2>
+            <p class="text-slate-400 mb-6">The amount received was less than the invoice total. Please contact the
+                merchant.</p>
+        </div>
+
+    </div>
+
+    <script>
+        const invoiceId = "{{ invoice.id }}";
+        const paymentUri = "{{ uri | safe }}";
+        let currentStatus = "{{ invoice.status }}";
+        let pollInterval;
+
+        if (currentStatus === 'PENDING') {
+            new QRCode(document.getElementById("qrcode"), {
+                text: paymentUri,
+                width: 200,
+                height: 200,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            pollInterval = setInterval(checkPaymentStatus, 2000);
+        }
+
+        async function checkPaymentStatus() {
+            try {
+                const response = await fetch(`/api/invoices/${invoiceId}`);
+                if (!response.ok) return;
+                const data = await response.json();
+
+                if (data.status === currentStatus) return;
+
+                // Hide payment section on any terminal state change
+                document.getElementById('payment-section').classList.add('hidden');
+                document.getElementById('payment-section').classList.remove('block');
+
+                if (data.status === 'PAID') {
+                    document.getElementById('success-message').classList.remove('hidden');
+                    document.getElementById('success-message').classList.add('block');
+                    clearInterval(pollInterval);
+                } else if (data.status === 'EXPIRED') {
+                    document.getElementById('expired-message').classList.remove('hidden');
+                    document.getElementById('expired-message').classList.add('block');
+                    clearInterval(pollInterval);
+                } else if (data.status === 'UNDERPAID') {
+                    document.getElementById('underpaid-message').classList.remove('hidden');
+                    document.getElementById('underpaid-message').classList.add('block');
+                    clearInterval(pollInterval);
+                }
+
+                currentStatus = data.status;
+
+            } catch (error) {
+                console.error("Error polling invoice status:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>
