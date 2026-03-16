@@ -47,6 +47,7 @@ class Invoice(Base):
     merchant_id = sa.Column(sa.String, sa.ForeignKey("merchants.id"), nullable=False)
     amount = sa.Column(sa.Float, nullable=False)
     memo = sa.Column(sa.String, unique=True, index=True, nullable=False)
+    sender_address = sa.Column(sa.String, nullable=True)
     webhook_url = sa.Column(sa.String, nullable=True)
     status = sa.Column(sa.String, default="PENDING")
     created_at = sa.Column(sa.DateTime, default=datetime.utcnow)
@@ -117,10 +118,11 @@ async def listen_to_mempool():
                         data = json.loads(message)
                         txid = data.get("txid")
                         memo = data.get("memo")
+                        sender_addr = data.get("sender_address")
                         outputs = data.get("outputs", [])
                         
                         if memo and outputs:
-                            logger.info(f"Received transaction msg| txid:{txid} memo:{memo} outputs:{len(outputs)}")
+                            logger.info(f"Received transaction msg| txid:{txid} memo:{memo} sender:{sender_addr} outputs:{len(outputs)}")
                             
                             db = SessionLocal()
                             try:
@@ -138,6 +140,8 @@ async def listen_to_mempool():
                                                 logger.warning(f"Overpayment on invoice {invoice.id}: received {received_atomic}, expected {expected_atomic}")
                                             logger.info(f"Payment confirmed for invoice {invoice.id}! (matched {received_atomic} atomic units)")
                                             invoice.status = "PAID"
+                                            if sender_addr:
+                                                invoice.sender_address = sender_addr
                                             db.commit()
                                             if invoice.webhook_url:
                                                 asyncio.create_task(send_webhook(invoice))
@@ -145,6 +149,8 @@ async def listen_to_mempool():
                                         elif received_atomic > 0 and received_atomic < expected_atomic:
                                             logger.warning(f"Underpayment on invoice {invoice.id}: received {received_atomic}, expected {expected_atomic}")
                                             invoice.status = "UNDERPAID"
+                                            if sender_addr:
+                                                invoice.sender_address = sender_addr
                                             db.commit()
                                             if invoice.webhook_url:
                                                 asyncio.create_task(send_webhook(invoice))
@@ -237,6 +243,7 @@ class InvoiceRes(BaseModel):
     id: str
     amount: float
     memo: str
+    sender_address: Optional[str] = None
     webhook_url: Optional[str] = None
     status: str
     created_at: datetime
