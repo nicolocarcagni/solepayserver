@@ -48,3 +48,15 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Node / React Frontend
+node_modules/
+solepay-admin/dist/
+solepay-admin/build/
+.npm
+.eslintcache
+*.local
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
