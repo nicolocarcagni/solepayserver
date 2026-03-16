@@ -20,7 +20,6 @@ import sqlalchemy as sa
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 import websockets
 
-# Setup Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("solepay")
 
@@ -53,7 +52,6 @@ class Invoice(Base):
     created_at = sa.Column(sa.DateTime, default=datetime.utcnow)
     expires_at = sa.Column(sa.DateTime, nullable=True)
 
-# Create tables
 Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -251,7 +249,6 @@ def create_invoice(payload: InvoiceCreateReq, merchant: Merchant = Depends(get_c
     if payload.amount <= 0:
         raise HTTPException(status_code=400, detail="Amount must be positive")
     
-    # Generate unique short memo (e.g., INV-last12charsof_uuid)
     memo = f"INV-{uuid.uuid4().hex[:12].upper()}"
     
     new_invoice = Invoice(
@@ -267,7 +264,6 @@ def create_invoice(payload: InvoiceCreateReq, merchant: Merchant = Depends(get_c
     db.commit()
     db.refresh(new_invoice)
     
-    # Construct payment URI
     uri = f"sole:{merchant.wallet_address}?amount={new_invoice.amount}&memo={new_invoice.memo}"
     
     response = InvoiceRes.model_validate(new_invoice)
