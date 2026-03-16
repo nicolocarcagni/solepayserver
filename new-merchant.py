@@ -74,4 +74,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    create_merchant(args.name, args.wallet)
+    create_merchant(args.name, args.address)
