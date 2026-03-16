@@ -119,7 +119,12 @@ async def listen_to_mempool():
                         data = json.loads(message)
                         txid = data.get("txid")
                         memo = data.get("memo")
-                        sender_addr = data.get("sender_address")
+                        
+                        sender_addr = None
+                        inputs = data.get("inputs", [])
+                        if inputs and len(inputs) > 0:
+                            sender_addr = inputs[0].get("sender_address")
+                            
                         outputs = data.get("outputs", [])
                         
                         if memo and outputs:
