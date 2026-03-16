@@ -66,7 +66,7 @@ if __name__ == "__main__":
         help="The name of the new merchant (e.g., 'Community Library')"
     )
     parser.add_argument(
-        "--wallet",
+        "--address",
         type=str,
         required=True,
         help="The merchant's SOLE wallet address (e.g., '1NXVc9JY9eVerzeqcvatMgHkrDYAJc2ec4')"
