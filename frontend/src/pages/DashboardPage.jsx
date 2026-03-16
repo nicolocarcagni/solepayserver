@@ -27,6 +27,12 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchMetrics();
+    
+    // Set up 60-second autorefresh
+    const interval = setInterval(fetchMetrics, 60000);
+    
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
   }, []);
 
   const fetchMetrics = async () => {

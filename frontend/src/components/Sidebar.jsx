@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { LayoutDashboard, FileText, Settings, Zap } from "lucide-react";
+import { LayoutDashboard, FileText, Settings, Sun } from "lucide-react";
 
 const navItems = [
   { to: "/", icon: LayoutDashboard, label: "Dashboard" },
@@ -13,7 +13,7 @@ export default function Sidebar() {
       <aside className="w-64 border-r border-slate-800 bg-slate-950 flex flex-col shrink-0">
         <div className="p-6 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <Zap className="w-6 h-6 text-yellow-400" />
+            <Sun className="w-6 h-6 text-amber-500 fill-amber-500/20" />
             <span className="text-lg font-bold text-white tracking-tight">
               SOLEPay
             </span>
