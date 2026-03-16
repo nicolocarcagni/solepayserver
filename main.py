@@ -282,6 +282,7 @@ def get_invoices(merchant: Merchant = Depends(get_current_merchant), db: Session
     # unless using an explicit mapping or the property itself. Pydantic v2 handles @property differently.
     result = []
     for inv in invoices:
+        uri = f"sole:{merchant.wallet_address}?amount={inv.amount}&memo={inv.memo}"
         res_dict = {
             "id": inv.id,
             "amount": inv.amount,
@@ -291,7 +292,7 @@ def get_invoices(merchant: Merchant = Depends(get_current_merchant), db: Session
             "status": inv.status,
             "created_at": inv.created_at,
             "expires_at": inv.expires_at,
-            "uri": inv.uri
+            "uri": uri
         }
         result.append(InvoiceRes(**res_dict))
     
