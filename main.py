@@ -257,6 +257,18 @@ def get_current_merchant(request: Request, api_key: Optional[str] = Security(api
 # 3. The REST API Endpoints
 # ==========================================
 
+class MerchantRes(BaseModel):
+    id: str
+    name: str
+    wallet_address: str
+    created_at: datetime
+    
+    model_config = ConfigDict(from_attributes=True)
+@app.get("/api/merchants/me", response_model=MerchantRes)
+def get_merchant_profile(merchant: Merchant = Depends(get_current_merchant)):
+    """Retrieves the profile of the currently authenticated merchant."""
+    return merchant
+
 @app.get("/api/health")
 def health_check():
     """Unauthenticated endpoint to verify server reachability."""
