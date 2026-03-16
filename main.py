@@ -15,6 +15,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.security import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
 import sqlalchemy as sa
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
@@ -213,6 +214,20 @@ async def lifespan(app: FastAPI):
         logger.info("Invoice sweeper task cancelled on shutdown.")
 
 app = FastAPI(title="SOLEPay Server MVP", lifespan=lifespan)
+
+# ==========================================
+# CORS Configuration
+# ==========================================
+raw_origins = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
+allowed_origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 templates = Jinja2Templates(directory="templates")
 
