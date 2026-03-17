@@ -1,10 +1,10 @@
-# ⚡ SOLEPay Server
+# 🔆 SOLEPay Server
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
-SOLEPay is an open-source, non-custodial cryptocurrency payment gateway designed specifically for the (SOLE)[https://github.com/nicolocarcagni/sole] Blockchain. It provides a lightweight and secure bridge for merchants to accept SOLE payments with real-time confirmation and automated webhook notifications.
+SOLEPay is an open-source, non-custodial cryptocurrency payment gateway designed specifically for the [SOLE](https://github.com/nicolocarcagni/sole) Blockchain. It provides a lightweight and secure bridge for merchants to accept SOLE payments with real-time confirmation and automated webhook notifications.
 
 ## Features
 
@@ -75,6 +75,10 @@ curl -X POST http://localhost:8000/api/invoices \
   "uri": "sole:1NXVc9JY9eVerzeqcvatMgHkrDYAJc2ec4?amount=1.5&memo=INV-A1B2C3D4E5F6"
 }
 ```
+
+## Acknowledgments
+
+*Some parts of the frontend and this README.md were generated with the assistance of AI.*
 
 ## License
 
