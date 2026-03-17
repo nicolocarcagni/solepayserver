@@ -26,7 +26,7 @@ export default function CreateInvoiceModal({ isOpen, onClose, onSuccess }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!amount || parseFloat(amount) < 1) return;
-    
+
     setLoading(true);
     setError(null);
 
@@ -50,21 +50,21 @@ export default function CreateInvoiceModal({ isOpen, onClose, onSuccess }) {
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-300" 
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-300"
       onClick={onClose}
     >
-      <div 
-        className="bg-slate-900 border border-slate-800/50 rounded-[2.5rem] w-full max-w-xs overflow-hidden shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] animate-in zoom-in-95 slide-in-from-bottom-4 duration-300" 
+      <div
+        className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xs overflow-hidden shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="px-6 pt-6 pb-2 flex items-center justify-between">
           <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">
             <Sun className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20" />
-            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-tight">Request</span>
+            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-tight">invoice</span>
           </div>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="p-2 hover:bg-slate-800 rounded-full text-slate-500 hover:text-white transition-all"
           >
             <X className="w-5 h-5" />
@@ -78,7 +78,7 @@ export default function CreateInvoiceModal({ isOpen, onClose, onSuccess }) {
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-2xl animate-in shake">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-xl animate-in shake">
               {error}
             </div>
           )}
@@ -111,7 +111,7 @@ export default function CreateInvoiceModal({ isOpen, onClose, onSuccess }) {
                       placeholder="0.00"
                     />
                   </div>
-                  <div className="mt-4 px-4 py-1.5 bg-slate-950 border border-slate-800 rounded-2xl shadow-inner">
+                  <div className="mt-4 px-4 py-1.5 bg-slate-950 border border-slate-800 rounded-xl shadow-inner">
                     <span className="text-sm font-black text-amber-500 tracking-widest uppercase">SOLE</span>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function CreateInvoiceModal({ isOpen, onClose, onSuccess }) {
                 <button
                   disabled={loading || !amount || parseFloat(amount) < 1}
                   type="submit"
-                  className="group relative w-full h-16 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-800 disabled:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-black rounded-3xl transition-all overflow-hidden"
+                  className="group relative w-full h-16 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-800 disabled:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-black rounded-2xl transition-all overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative flex items-center justify-center gap-3">

@@ -3,9 +3,9 @@ import { Sun, Clock, TrendingUp } from "lucide-react";
 
 function KPICard({ icon: Icon, label, value, accent, loading }) {
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-sm">
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
       <div className="flex items-center gap-3 mb-3">
-        <div className={`p-2 rounded-lg ${accent}`}>
+        <div className={`p-2 rounded-xl ${accent}`}>
           <Icon className="w-4 h-4" />
         </div>
         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{label}</span>

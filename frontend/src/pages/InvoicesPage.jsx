@@ -105,14 +105,14 @@ export default function InvoicesPage() {
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={exportToCSV}
-            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2"
+            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2"
           >
             <Download className="w-4 h-4" />
             Export CSV
           </button>
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 shadow-lg shadow-amber-500/20"
+            className="bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg shadow-amber-500/20"
           >
             <Plus className="w-4 h-4" />
             Create Invoice
@@ -120,7 +120,7 @@ export default function InvoicesPage() {
           <button
             onClick={fetchInvoices}
             disabled={loading}
-            className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+            className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Refresh"}
           </button>
@@ -128,12 +128,12 @@ export default function InvoicesPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div className="flex items-center p-1 bg-slate-900 border border-slate-800 rounded-xl w-fit">
+        <div className="flex items-center p-1 bg-slate-900 border border-slate-800 rounded-2xl w-fit">
           {["ALL", "PAID", "PENDING", "EXPIRED"].map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 activeFilter === filter
                   ? "bg-slate-800 text-white shadow-lg"
                   : "text-slate-500 hover:text-slate-300"
@@ -170,7 +170,7 @@ export default function InvoicesPage() {
         </div>
       )}
 
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

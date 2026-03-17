@@ -9,8 +9,8 @@ export default function InvoiceDetailModal({ invoice, onClose }) {
   if (!invoice) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-300" onClick={onClose}>
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()}>
         <div className="p-6 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Sun className="w-5 h-5 text-amber-500" />
@@ -39,7 +39,7 @@ export default function InvoiceDetailModal({ invoice, onClose }) {
           <div className="space-y-4 pt-4 border-t border-slate-800/50">
             <div className="space-y-1">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Full Invoice ID</p>
-              <div className="bg-slate-950 border border-slate-800 p-2 rounded-lg">
+              <div className="bg-slate-950 border border-slate-800 p-2 rounded-xl">
                 <CopyableId id={invoice.id} />
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function InvoiceDetailModal({ invoice, onClose }) {
         <div className="bg-slate-800/50 p-4 border-t border-slate-800 text-center">
           <button 
             onClick={onClose}
-            className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2 rounded-lg transition-colors"
+            className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-2 rounded-xl transition-colors"
           >
             Close
           </button>

@@ -76,7 +76,7 @@ export default function SettingsPage() {
         Configure your SOLEPay Server connection.
       </p>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-lg space-y-6">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-lg space-y-6">
         
         {/* Connection Form */}
         <div className="space-y-5">
@@ -91,7 +91,7 @@ export default function SettingsPage() {
               onChange={(e) => setLocalUrl(e.target.value)}
               disabled={!isEditing}
               placeholder="https://pay.example.com"
-              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition disabled:opacity-50"
+              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition disabled:opacity-50"
             />
           </div>
 
@@ -101,7 +101,7 @@ export default function SettingsPage() {
               Master API Key
             </label>
             {!isEditing ? (
-              <div className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-sm font-mono text-emerald-400 flex items-center justify-between">
+              <div className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-mono text-emerald-400 flex items-center justify-between">
                 <span>{maskApiKey(apiKey)}</span>
                 <CheckCircle className="w-4 h-4 text-emerald-500" />
               </div>
@@ -111,7 +111,7 @@ export default function SettingsPage() {
                 value={localKey}
                 onChange={(e) => setLocalKey(e.target.value)}
                 placeholder="sole_live_..."
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition"
+                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition"
               />
             )}
           </div>
@@ -119,7 +119,7 @@ export default function SettingsPage() {
           {!isEditing ? (
             <button
               onClick={handleDisconnect}
-              className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 font-semibold py-2.5 rounded-lg text-sm transition-colors"
+              className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 font-semibold py-2.5 rounded-xl text-sm transition-colors"
             >
               Disconnect & Reset
             </button>
@@ -127,7 +127,7 @@ export default function SettingsPage() {
             <button
               onClick={handleConnect}
               disabled={loading || !localUrl || !localKey}
-              className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold py-2.5 rounded-lg text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold py-2.5 rounded-xl text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>
@@ -142,7 +142,7 @@ export default function SettingsPage() {
 
           {status && (
             <div
-              className={`flex items-start gap-2 text-sm p-3 rounded-lg ${
+              className={`flex items-start gap-2 text-sm p-3 rounded-xl ${
                 status.ok
                   ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                   : "bg-red-500/10 text-red-400 border border-red-500/20"
@@ -162,9 +162,9 @@ export default function SettingsPage() {
         {!isEditing && merchant && (
           <div className="pt-6 border-t border-slate-800">
             <h3 className="text-sm font-semibold text-white mb-4">Connected Profile</h3>
-            <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4">
+            <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-amber-500/10 rounded-lg">
+                <div className="p-2 bg-amber-500/10 rounded-xl">
                   <User className="w-5 h-5 text-amber-500" />
                 </div>
                 <div>
@@ -178,7 +178,7 @@ export default function SettingsPage() {
                   <Wallet className="w-3.5 h-3.5 text-slate-500" />
                   <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Wallet Address</span>
                 </div>
-                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-lg">
+                <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl">
                   <p className="text-xs font-mono text-slate-300 break-all">{merchant.wallet_address}</p>
                 </div>
               </div>
