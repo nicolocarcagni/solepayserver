@@ -15,10 +15,10 @@ export default function Sidebar() {
           <div className="flex items-center gap-2">
             <Sun className="w-6 h-6 text-amber-500 fill-amber-500/20" />
             <span className="text-lg font-bold text-white tracking-tight">
-              SOLEPay
+              SOLEPay Server
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">Admin Dashboard</p>
+          <p className="text-xs text-slate-500 mt-1">Merchant Dashboard</p>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -28,10 +28,9 @@ export default function Sidebar() {
               to={to}
               end={to === "/"}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-yellow-400/10 text-yellow-400"
-                    : "text-slate-400 hover:text-white hover:bg-slate-800/60"
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                  ? "bg-yellow-400/10 text-yellow-400"
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                 }`
               }
             >
@@ -42,7 +41,18 @@ export default function Sidebar() {
         </nav>
 
         <div className="p-4 border-t border-slate-800">
-          <p className="text-[11px] text-slate-600">SOLEPay Server © 2026</p>
+          <p className="text-[11px] text-slate-600">
+            nicolocarcagni © 2026
+            <span className="mx-2">|</span>
+            <a
+              href="https://github.com/nicolocarcagni/solepayserver/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-400 transition-colors underline"
+            >
+              LICENSE
+            </a>
+          </p>
         </div>
       </aside>
 
